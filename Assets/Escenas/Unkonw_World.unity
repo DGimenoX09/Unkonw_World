@@ -36551,7 +36551,7 @@ GameObject:
   - component: {fileID: 1154280553}
   - component: {fileID: 1154280552}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MenuPausa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49864,6 +49864,59 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1561124115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1561124117}
+  - component: {fileID: 1561124116}
+  m_Layer: 0
+  m_Name: LimiteCaida
+  m_TagString: Destruir
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1561124116
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561124115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.8231392, z: 430.24084}
+  m_Center: {x: 0, y: -0.4115696, z: -165.57745}
+--- !u!4 &1561124117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561124115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.012085098, y: -3.5, z: 375.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1566332539
 Mesh:
   m_ObjectHideFlags: 0
@@ -59274,6 +59327,7 @@ GameObject:
   - component: {fileID: 1898316082}
   - component: {fileID: 1898316086}
   - component: {fileID: 1898316088}
+  - component: {fileID: 1898316089}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -59438,6 +59492,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   escenario1: {fileID: 375736202}
   escenario2: {fileID: 1610518311}
+--- !u!114 &1898316089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898316081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739d1d2968dea454185b54ddefed940b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1913431018
 Mesh:
   m_ObjectHideFlags: 0
@@ -65555,3 +65621,4 @@ SceneRoots:
   - {fileID: 959296981}
   - {fileID: 1154280555}
   - {fileID: 1956705337}
+  - {fileID: 1561124117}
