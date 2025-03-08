@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Proyecto_DEAM.sln"
+    "dotnet.defaultSolution": "Unkonw_World.sln"
 }
