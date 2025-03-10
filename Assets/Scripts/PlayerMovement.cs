@@ -19,40 +19,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]private Vector3 velocity; 
     private bool isGrounded; 
     
-
-    public GameObject escenario1; 
-    public GameObject escenario2; 
-
-    private GameObject escenarioActual;
-
     public float ReducirVelocidad = 2.5f; 
 
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-
-        escenarioActual = escenario1;
-        // escenario1.SetActive(true);
-        // escenario2.SetActive(false);
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            CambiarEscenario();
-            return;
-        }
         
-        /*if (Input.GetKeyDown(KeyCode.J)&& changeTime<0 )
-        {
-            CambiarEscenario();
-            changeTime=changeTimer;
-            return;
-        }
-        changeTime-=Time.deltaTime;*/
 
         MovePlayer();
         Gravity(); 
@@ -124,42 +102,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
-    void CambiarEscenario()
-    {   
-        float teleportOffset;
-
-        if(escenarioActual == escenario1)
-        {
-            teleportOffset = 61;
-            escenarioActual = escenario2;
-        }
-        else
-        {
-            teleportOffset = -59;
-            escenarioActual = escenario1;
-        }
-        
-        transform.position = new Vector3(transform.position.x, transform.position.y + teleportOffset, transform.position.z);
-
-            /*if (escenarioActual == escenario1)
-            {
-                // escenario1.SetActive(false);
-                // escenario2.SetActive(true);
-                escenarioActual = escenario2;
-
-                transform.position = new Vector3(transform.position.x, transform.position.y + 61f, transform.position.z);
-            }
-            else
-            {
-                // escenario2.SetActive(false);
-                // escenario1.SetActive(true);
-                escenarioActual = escenario1;
-
-                transform.position = new Vector3(transform.position.x, transform.position.y - 59f, transform.position.z);
-            }*/
-      
-    }
 
 
 }
