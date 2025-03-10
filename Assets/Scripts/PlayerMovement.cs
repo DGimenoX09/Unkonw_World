@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float changeTime;
     public float changeTimer=0.5f;
 
+    
+
 
     private CharacterController characterController;
     [SerializeField]private Vector3 velocity; 
@@ -41,7 +43,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+      // Metodo para aplicar el rebote
+    public void Bounce(float bounceForce)
+    {
+        velocity.y = bounceForce; // Establece la velocidad vertical al valor de rebote
+        
+    }
 
+    
 
     void Gravity()
     {
@@ -57,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
     }
-
 
 
 
