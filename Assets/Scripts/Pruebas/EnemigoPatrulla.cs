@@ -10,6 +10,8 @@ public class EnemigoPatrulla : MonoBehaviour
     private bool moviendoDerecha = true; // Estado de movimiento
     private CharacterController characterController;
 
+    public float distance;
+
     void Start()
     {
         // Inicializa el objetivo al punto de la derecha
@@ -25,8 +27,10 @@ public class EnemigoPatrulla : MonoBehaviour
         // Mueve el enemigo hacia el objetivo
         characterController.Move(direccion * velocidad * Time.deltaTime);
 
+        distance = Vector3.Distance(transform.position, objetivo);
+
         // Verifica si el enemigo ha llegado al objetivo
-        if (Vector3.Distance(transform.position, objetivo) < 0.1f)
+        if (Vector3.Distance(transform.position, objetivo) <= 0.7f)
         {
             // Cambia el objetivo al punto opuesto
             if (moviendoDerecha)
