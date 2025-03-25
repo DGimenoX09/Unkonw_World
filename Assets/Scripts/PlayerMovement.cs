@@ -94,7 +94,17 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move((move * currentMoveSpeed + velocity) * Time.deltaTime);
 
 
-    }
+          // Rotacion del personaje
+        if (horizontalInput < 0) // Si se mueve hacia atras
+        {
+        transform.rotation = Quaternion.Euler(0, 180, 0); // Rotar 180 en el eje Y
+        }
+        else if (horizontalInput > 0) // Si se mueve hacia adelante
+        {
+        transform.rotation = Quaternion.Euler(0, 0, 0); // Mantener la rotacion original
+        }
+
+        }
 
 
 
