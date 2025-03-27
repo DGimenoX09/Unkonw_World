@@ -2,47 +2,93 @@ using UnityEngine;
 
 public class EnemigoPatrulla : MonoBehaviour
 {
-    public Transform puntoIzquierda; // Asigna el punto izquierdo en el inspector
-    public Transform puntoDerecha;   // Asigna el punto derecho en el inspector
-    public float velocidad = 2f;     // Velocidad de patrullaje
+    public Transform puntoIzquierda; 
+    public Transform puntoDerecha;   
+    public float velocidad = 2f;     
 
-    private Vector3 objetivo;         // El objetivo actual al que se mueve el enemigo
-    private bool moviendoDerecha = true; // Estado de movimiento
+    private Vector3 objetivo;         
+    private bool moviendoDerecha = true; 
     private CharacterController characterController;
+    private bool atacando = false; 
 
     public float distance;
+    private float tiempoSinContacto = 0f; 
+    public float tiempoParaReanudar = 1.5f; 
+
+    [Header("Ajustes de Ataque")]
+    public float rangoAtaque = 1.5f; // Distancia de ataque
+    private Transform jugador; 
 
     void Start()
     {
-        // Inicializa el objetivo al punto de la derecha
         objetivo = puntoDerecha.position;
         characterController = GetComponent<CharacterController>();
+
+        // Encuentra al jugador por la etiqueta
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            jugador = playerObj.transform;
+        }
     }
 
     void Update()
     {
-        // Calcula la direccion hacia el objetivo
-        Vector3 direccion = (objetivo - transform.position).normalized;
-
-        // Mueve el enemigo hacia el objetivo
-        characterController.Move(direccion * velocidad * Time.deltaTime);
-
-        distance = Vector3.Distance(transform.position, objetivo);
-
-        // Verifica si el enemigo ha llegado al objetivo
-        if (Vector3.Distance(transform.position, objetivo) <= 0.7f)
+        if (jugador != null)
         {
-            // Cambia el objetivo al punto opuesto
-            if (moviendoDerecha)
+            float distanciaAlJugador = Vector3.Distance(transform.position, jugador.position);
+
+            if (distanciaAlJugador <= rangoAtaque)
             {
-                objetivo = puntoIzquierda.position;
+                atacando = true;
+                tiempoSinContacto = 0f; 
+                Debug.Log("Atacando al jugador dentro del rango.");
             }
             else
             {
-                objetivo = puntoDerecha.position;
+                if (atacando)
+                {
+                    tiempoSinContacto += Time.deltaTime;
+                    if (tiempoSinContacto >= tiempoParaReanudar)
+                    {
+                        atacando = false; // Reanuda el movimiento
+                        Debug.Log("Reanudando patrulla despues de esperar.");
+                    }
+                }
             }
-            moviendoDerecha = !moviendoDerecha; // Cambia el estado de movimiento
-            Debug.Log("Cambiando objetivo a: " + objetivo);
         }
+
+        if (!atacando)
+        {
+            // Movimiento normal
+            Vector3 direccion = (objetivo - transform.position).normalized;
+            direccion.y = 0; 
+            characterController.Move(direccion * velocidad * Time.deltaTime);
+
+            distance = Vector3.Distance(transform.position, objetivo);
+
+            if (distance <= 0.7f)
+            {
+                objetivo = moviendoDerecha ? puntoIzquierda.position : puntoDerecha.position;
+                moviendoDerecha = !moviendoDerecha;
+            }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("Player"))
+        {
+            atacando = true; 
+            tiempoSinContacto = 0f; 
+            Debug.Log("Atacando al jugador (colision detectada).");
+        }
+    }
+
+    // Dibuja un circulo en la escena para visualizar el rango de ataque
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red; // Color del circulo
+        Gizmos.DrawWireSphere(transform.position, rangoAtaque);
     }
 }
