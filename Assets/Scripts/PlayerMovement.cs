@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float changeTime;
     public float changeTimer=0.5f;
 
-    
+    private Animator _animator; 
 
 
     private CharacterController characterController;
@@ -27,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+    }
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>(); 
     }
 
 
@@ -59,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; 
+            _animator.SetBool("IsJumping", false); 
+
         }
 
         if(!isGrounded)
@@ -74,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); 
+            _animator.SetBool("IsJumping", true); 
         }
     }
 
@@ -98,10 +106,18 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalInput < 0) // Si se mueve hacia atras
         {
         transform.rotation = Quaternion.Euler(0, 180, 0); // Rotar 180 en el eje Y
+        _animator.SetBool("IsRunning", true); 
         }
-        else if (horizontalInput > 0) // Si se mueve hacia adelante
+        
+        if (horizontalInput > 0) // Si se mueve hacia adelante
         {
         transform.rotation = Quaternion.Euler(0, 0, 0); // Mantener la rotacion original
+        _animator.SetBool("IsRunning", true); 
+        }
+
+        else if (horizontalInput == 0)
+        {
+        _animator.SetBool("IsRunning", false); 
         }
 
         }
