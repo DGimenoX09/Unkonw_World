@@ -13,7 +13,7 @@ public class EnemigoPatrulla : MonoBehaviour
 
     public float distance;
     private float tiempoSinContacto = 0f; 
-    public float tiempoParaReanudar = 1.5f; 
+    public float tiempoParaReanudar = 0.5f; 
 
     [Header("Ajustes de Ataque")]
     public float rangoAtaque = 1.5f; // Distancia de ataque
@@ -71,6 +71,9 @@ public class EnemigoPatrulla : MonoBehaviour
             {
                 objetivo = moviendoDerecha ? puntoIzquierda.position : puntoDerecha.position;
                 moviendoDerecha = !moviendoDerecha;
+
+                // Rotar el enemigo dependiendo de la direccion
+                transform.rotation = moviendoDerecha ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
             }
         }
     }
