@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Destruir
   - Enemigo
-  - CambioCarril
+  - CambioCarrilZone
   layers:
   - Default
   - TransparentFX
