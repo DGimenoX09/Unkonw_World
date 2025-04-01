@@ -11,12 +11,16 @@ public class EnemigoPatrulla : MonoBehaviour
     private CharacterController characterController;
     private bool atacando = false; 
 
+    private Animator _animator; 
+
+
     public float distance;
     private float tiempoSinContacto = 0f; 
     public float tiempoParaReanudar = 0.5f; 
 
     [Header("Ajustes de Ataque")]
-    public float rangoAtaque = 1.5f; // Distancia de ataque
+    public Transform puntoAtaque; // Empty para definir el centro del ataque
+    public Vector3 rangoAtaqueXYZ = new Vector3(1.5f, 1.5f, 1.5f); // Rango en cada eje
     private Transform jugador; 
 
     void Start()
@@ -32,17 +36,26 @@ public class EnemigoPatrulla : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        _animator = GetComponent<Animator>(); 
+    }
+
     void Update()
     {
         if (jugador != null)
         {
-            float distanciaAlJugador = Vector3.Distance(transform.position, jugador.position);
+            Vector3 distanciaRelativa = jugador.position - puntoAtaque.position;
+            bool dentroDelRango = Mathf.Abs(distanciaRelativa.x) <= rangoAtaqueXYZ.x &&
+                                  Mathf.Abs(distanciaRelativa.y) <= rangoAtaqueXYZ.y &&
+                                  Mathf.Abs(distanciaRelativa.z) <= rangoAtaqueXYZ.z;
 
-            if (distanciaAlJugador <= rangoAtaque)
+            if (dentroDelRango)
             {
                 atacando = true;
                 tiempoSinContacto = 0f; 
                 Debug.Log("Atacando al jugador dentro del rango.");
+                _animator.SetTrigger("IsAttacking"); 
             }
             else
             {
@@ -63,6 +76,7 @@ public class EnemigoPatrulla : MonoBehaviour
             // Movimiento normal
             Vector3 direccion = (objetivo - transform.position).normalized;
             direccion.y = 0; 
+            _animator.SetBool("IsWalking", true); 
             characterController.Move(direccion * velocidad * Time.deltaTime);
 
             distance = Vector3.Distance(transform.position, objetivo);
@@ -79,10 +93,10 @@ public class EnemigoPatrulla : MonoBehaviour
     }
 
     public void Stun()
-{
-    Debug.Log("¡Enemigo aturdido!");
-    // Aqui puedes agregar logica para desactivar el movimiento temporalmente
-}
+    {
+        Debug.Log("¡Enemigo aturdido!");
+        // Aquí puedes agregar lógica para desactivar el movimiento temporalmente
+    }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -90,14 +104,17 @@ public class EnemigoPatrulla : MonoBehaviour
         {
             atacando = true; 
             tiempoSinContacto = 0f; 
-            Debug.Log("Atacando al jugador (colision detectada).");
+            Debug.Log("Atacando al jugador (colisión detectada).");
         }
     }
 
-    // Dibuja un circulo en la escena para visualizar el rango de ataque
+    // Dibuja un área de ataque en la escena para visualizar el rango en X, Y y Z
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red; // Color del circulo
-        Gizmos.DrawWireSphere(transform.position, rangoAtaque);
+        if (puntoAtaque != null)
+        {
+            Gizmos.color = Color.red; // Color del área de ataque
+            Gizmos.DrawWireCube(puntoAtaque.position, rangoAtaqueXYZ * 2);
+        }
     }
 }
