@@ -51264,8 +51264,8 @@ Transform:
   m_GameObject: {fileID: 1818649899}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.627963, y: -9.004523, z: 135.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 12.745375, y: -4.3, z: -43.10851}
+  m_LocalScale: {x: 0.619, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 109295743}
@@ -51283,25 +51283,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
-    meanFreePath: 18.51
+    albedo: {r: 0.019624414, g: 0.28856218, b: 0.46226418, a: 1}
+    meanFreePath: 6.06
     blendingMode: 1
     priority: 0
     anisotropy: 0
-    volumeMask: {fileID: 0}
-    textureScrollingSpeed: {x: 0, y: 0, z: 0}
-    textureTiling: {x: 1, y: 1, z: 1}
+    volumeMask: {fileID: 11700000, guid: 7e1cc774c55df914f8f38903f032d2cb, type: 3}
+    textureScrollingSpeed: {x: 0, y: 0, z: -0.08}
+    textureTiling: {x: 1.2, y: -15.23, z: 10}
     positiveFade: {x: 0, y: 0, z: 0}
     negativeFade: {x: 0, y: 0, z: 0}
     m_EditorUniformFade: 0
-    m_EditorPositiveFade: {x: 0.0021670745, y: 0.0018581952, z: 0.00023190063}
-    m_EditorNegativeFade: {x: 0.0021670745, y: 0.0018581952, z: 0.00023190063}
+    m_EditorPositiveFade: {x: 0.0026173694, y: 0.00024770864, z: 0.0010266264}
+    m_EditorNegativeFade: {x: 0.0026173694, y: 0.00024770864, z: 0.0010266264}
     m_EditorAdvancedFade: 0
-    size: {x: 46.145157, y: 53.815674, z: 431.2193}
+    size: {x: 38.20631, y: 403.7, z: 97.40639}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
-    textureOffset: {x: 0, y: 0, z: 0}
+    textureOffset: {x: -0, y: -0, z: 0.7353111}
     falloffMode: 0
     maskMode: 0
     materialMask: {fileID: 0}
