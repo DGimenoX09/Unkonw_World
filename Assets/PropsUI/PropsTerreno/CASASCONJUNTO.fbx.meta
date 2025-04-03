@@ -3,7 +3,37 @@ guid: 4fb259f87d63c5b4d8e9237444c22e8f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Acera
+    second: {fileID: 2100000, guid: 6ed7a2d7c5885c3469bbd95b61876548, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CasaAmarilla
+    second: {fileID: 2100000, guid: 58228b03590ed2347af35756c8b8da35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CasaAzul
+    second: {fileID: 2100000, guid: 83677b3350751f449ad6c81cbce6a400, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CasaRoja
+    second: {fileID: 2100000, guid: 6378543f8128ff44b9737aba9d0d8cf6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CasaVerde
+    second: {fileID: 2100000, guid: e61c936615388e94f8e5820c421a9f58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Vidrios
+    second: {fileID: 2100000, guid: de66c5a61c63a684aa72ea0b378edcc2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
