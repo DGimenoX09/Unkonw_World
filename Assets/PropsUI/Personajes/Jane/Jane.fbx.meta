@@ -3,7 +3,42 @@ guid: de28e530f63318f42b5a14ef29d8d2a1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Amarillo
+    second: {fileID: 2100000, guid: a82aac0f7a433a343a7720fabff988d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: c215488094991094c9645f9f78af498a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 27465a4a7fa097b4e8c9239ca0561df8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 6f273ce38e02bc449b36e7e86868808c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ropa
+    second: {fileID: 2100000, guid: 5229000e83813354fa08044d1e45a409, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TextCuerpo
+    second: {fileID: 2100000, guid: 9c2c5cf8602c1c14aa6e383371982074, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: luz
+    second: {fileID: 2100000, guid: f13c1adc7fe77b149aa655c724969ff1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
