@@ -28,12 +28,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Ropa
-    second: {fileID: 2100000, guid: 5229000e83813354fa08044d1e45a409, type: 2}
+    second: {fileID: 2100000, guid: d75affef97da93b4eb051e9894e23457, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: TextCuerpo
-    second: {fileID: 2100000, guid: 9c2c5cf8602c1c14aa6e383371982074, type: 2}
+    second: {fileID: 2100000, guid: 28a5e0f70b9afb64a93fe36155773090, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
