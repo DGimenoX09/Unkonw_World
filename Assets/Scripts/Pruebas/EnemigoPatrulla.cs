@@ -92,12 +92,7 @@ public class EnemigoPatrulla : MonoBehaviour
         }
     }
 
-    public void Stun()
-    {
-        Debug.Log("¡Enemigo aturdido!");
-        // Aquí puedes agregar lógica para desactivar el movimiento temporalmente
-    }
-
+    
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.collider.CompareTag("Player"))
