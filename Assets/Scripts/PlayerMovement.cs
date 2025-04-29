@@ -107,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
         {
         transform.rotation = Quaternion.Euler(0, 180, 0); // Rotar 180 en el eje Y
         _animator.SetBool("IsRunning", true); 
+        
         }
         
         if (horizontalInput > 0) // Si se mueve hacia adelante
