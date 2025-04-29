@@ -13,7 +13,7 @@ public class PlayerDestroyer : MonoBehaviour
             SceneManager.LoadScene("MenuDeMuerte"); // Asegurate de que el nombre de la escena sea correcto
         }
     }
-}
+} 
 
 
 
