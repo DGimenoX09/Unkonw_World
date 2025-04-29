@@ -13,6 +13,9 @@ public class EnemigoPatrulla : MonoBehaviour
 
     private Animator _animator; 
 
+    private bool aturdido = false; // Estado interno
+    private float tiempoAturdido = 0f;
+
 
     public float distance;
     private float tiempoSinContacto = 0f; 
@@ -43,6 +46,17 @@ public class EnemigoPatrulla : MonoBehaviour
 
     void Update()
     {
+        if (aturdido)
+        {
+            tiempoAturdido -= Time.deltaTime;
+            if (tiempoAturdido <= 0f)
+            {
+                aturdido = false;
+                Debug.Log("Enemigo ya no está aturdido");
+            }
+            return; // Salir del Update si está aturdido
+        }
+        
         if (jugador != null)
         {
             Vector3 distanciaRelativa = jugador.position - puntoAtaque.position;
@@ -90,9 +104,23 @@ public class EnemigoPatrulla : MonoBehaviour
                 transform.rotation = moviendoDerecha ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
             }
         }
+        
+        
     }
 
-    
+    public void Stun(float duration)
+    {
+    if (!aturdido)
+    {
+        aturdido = true;
+        tiempoAturdido = duration;
+        atacando = false; // Detener ataque si estaba atacando
+        _animator.SetBool("IsWalking", false);
+        _animator.SetTrigger("IsStunned"); // Si tienes una animación de aturdimiento
+        Debug.Log("Enemigo aturdido por " + duration + " segundos");
+    }
+    }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.collider.CompareTag("Player"))
