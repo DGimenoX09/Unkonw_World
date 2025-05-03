@@ -18,9 +18,13 @@ public class PlayerMovement : MonoBehaviour
 
 
     private CharacterController characterController;
+
     [SerializeField]private Vector3 velocity; 
+
     private bool isGrounded; 
     
+     //[SerializeField] private ParticleSystem particulas; 
+
     public float ReducirVelocidad = 2.5f; 
 
 
@@ -81,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); 
-            _animator.SetBool("IsJumping", true); 
+            _animator.SetBool("IsJumping", true);  
         }
     }
 
