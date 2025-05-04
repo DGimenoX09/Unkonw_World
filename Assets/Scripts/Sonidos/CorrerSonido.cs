@@ -26,6 +26,7 @@ public class CorrerSonido : MonoBehaviour
         {
             if (!footstepsAudio.isPlaying)
                 footstepsAudio.Play();
+                Debug.Log("Reproduciendo sonido");
         }
         else
         {
