@@ -1,21 +1,28 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerDestroyer : MonoBehaviour
 {
-    // Este metodo se llama cuando el collider del jugador entra en contacto con otro collider
+    public Transform respawnPoint; // Punto vacío donde reaparecerá el jugador
+
     private void OnTriggerEnter(Collider other)
     {
-        // Verifica si el objeto con el que colisiona tiene la etiqueta "Destruir"
         if (other.CompareTag("Destruir"))
         {
-            Debug.Log("Has muerto"); // Mensaje de depuracion
-            SceneManager.LoadScene("MenuDeMuerte"); // Asegurate de que el nombre de la escena sea correcto
+            Debug.Log("Has muerto"); // Mensaje de depuración
+
+            CharacterController controller = GetComponent<CharacterController>();
+            if (controller != null)
+            {
+                // Desactivar el CharacterController para cambiar la posición sin conflicto
+                controller.enabled = false;
+                transform.position = respawnPoint.position;
+                controller.enabled = true;
+            }
+            else
+            {
+                // Si no se encuentra CharacterController, mover normalmente
+                transform.position = respawnPoint.position;
+            }
         }
     }
-} 
-
-
-
-
-     
+}

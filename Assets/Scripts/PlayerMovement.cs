@@ -4,29 +4,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]public float moveSpeed = 5f; 
-    [SerializeField]public float currentMoveSpeed; 
-    public float jumpHeight = 2f; 
-    public float gravity = -9f; 
-    public Transform groundCheck; 
-    public float groundDistance = 0.1f; 
-    public LayerMask groundMask; 
+    [SerializeField] public float moveSpeed = 5f;
+    [SerializeField] public float currentMoveSpeed;
+    public float jumpHeight = 2f;
+    public float gravity = -9f;
+    public Transform groundCheck;
+    public float groundDistance = 0.1f;
+    public LayerMask groundMask;
     public float changeTime;
-    public float changeTimer=0.5f;
+    public float changeTimer = 0.5f;
 
-    private Animator _animator; 
-
+    private Animator _animator;
 
     private CharacterController characterController;
+    [SerializeField] private Vector3 velocity;
+    private bool isGrounded;
 
-    [SerializeField]private Vector3 velocity; 
+    public float ReducirVelocidad = 2.5f;
 
-    private bool isGrounded; 
-    
-     //[SerializeField] private ParticleSystem particulas; 
-
-    public float ReducirVelocidad = 2.5f; 
-
+    // NUEVO: Último punto de respawn tocado
+    [HideInInspector] public Transform currentRespawnPoint;
 
     void Start()
     {
@@ -35,16 +32,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        _animator = GetComponent<Animator>(); 
+        _animator = GetComponent<Animator>();
     }
-
 
     void Update()
     {
-        
-
         MovePlayer();
-        Gravity(); 
+        Gravity();
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -52,14 +46,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-      // Metodo para aplicar el rebote
     public void Bounce(float bounceForce)
     {
-        velocity.y = bounceForce; // Establece la velocidad vertical al valor de rebote
-        
+        velocity.y = bounceForce;
     }
-
-    
 
     void Gravity()
     {
@@ -67,84 +57,81 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; 
-            _animator.SetBool("IsJumping", false); 
-
+            velocity.y = -2f;
+            _animator.SetBool("IsJumping", false);
         }
 
-        if(!isGrounded)
+        if (!isGrounded)
         {
             velocity.y += gravity * Time.deltaTime;
         }
     }
 
-
-
     void Jump()
     {
         if (isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); 
-            _animator.SetBool("IsJumping", true);  
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            _animator.SetBool("IsJumping", true);
         }
     }
 
-
-
     void MovePlayer()
     {
-    
         float horizontalInput = Input.GetAxis("Horizontal");
-
         Vector3 move = new Vector3(0, 0, horizontalInput);
-
         float currentMoveSpeed = isGrounded ? moveSpeed : ReducirVelocidad;
-
-        // if(!isGrounded) currentMoveSpeed=ReducirVelocidad;
-        // else currentMoveSpeed=moveSpeed;
 
         characterController.Move((move * currentMoveSpeed + velocity) * Time.deltaTime);
 
-
-          // Rotacion del personaje
-        if (horizontalInput < 0) // Si se mueve hacia atras
+        // Rotación del personaje
+        if (horizontalInput < 0)
         {
-        transform.rotation = Quaternion.Euler(0, 180, 0); // Rotar 180 en el eje Y
-        _animator.SetBool("IsRunning", true); 
-        
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            _animator.SetBool("IsRunning", true);
         }
-        
-        if (horizontalInput > 0) // Si se mueve hacia adelante
+        else if (horizontalInput > 0)
         {
-        transform.rotation = Quaternion.Euler(0, 0, 0); // Mantener la rotacion original
-        _animator.SetBool("IsRunning", true); 
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            _animator.SetBool("IsRunning", true);
         }
-
-        else if (horizontalInput == 0)
+        else
         {
-        _animator.SetBool("IsRunning", false); 
+            _animator.SetBool("IsRunning", false);
         }
+    }
 
+    // NUEVO: Método para hacer respawn
+    public void Respawn()
+    {
+        if (currentRespawnPoint != null)
+        {
+            characterController.enabled = false;
+            transform.position = currentRespawnPoint.position;
+            characterController.enabled = true;
+            Debug.Log("Has muerto y has respawneado.");
         }
+        else
+        {
+            Debug.LogWarning("No hay respawn asignado.");
+        }
+    }
 
+    // NUEVO: Detección de colisión con "Destruir"
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Destruir"))
+        {
+            Respawn();
+        }
+    }
 
-
-      
     private void OnDrawGizmos()
     {
         if (groundCheck != null)
         {
             Gizmos.color = Color.red;
-
             Gizmos.DrawCube(groundCheck.position, new Vector3(groundDistance * 2, groundDistance * 2, groundDistance * 2));
         }
     }
-
-
-
-
 }
-
-
-
-
