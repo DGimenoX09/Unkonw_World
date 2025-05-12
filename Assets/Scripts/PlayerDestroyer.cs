@@ -2,27 +2,30 @@ using UnityEngine;
 
 public class PlayerDestroyer : MonoBehaviour
 {
-    public Transform respawnPoint; // Punto vacío donde reaparecerá el jugador
+    public Transform respawnPoint; // Se actualizara al pisar un nuevo checkpoint
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Destruir"))
         {
-            Debug.Log("Has muerto"); // Mensaje de depuración
+            Debug.Log("Has muerto");
 
             CharacterController controller = GetComponent<CharacterController>();
             if (controller != null)
             {
-                // Desactivar el CharacterController para cambiar la posición sin conflicto
                 controller.enabled = false;
                 transform.position = respawnPoint.position;
                 controller.enabled = true;
             }
             else
             {
-                // Si no se encuentra CharacterController, mover normalmente
                 transform.position = respawnPoint.position;
             }
         }
+    }
+
+    public void SetRespawnPoint(Transform newRespawnPoint)
+    {
+        respawnPoint = newRespawnPoint;
     }
 }

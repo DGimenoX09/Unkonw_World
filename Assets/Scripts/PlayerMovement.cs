@@ -22,8 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float ReducirVelocidad = 2.5f;
 
-    // NUEVO: Último punto de respawn tocado
-    [HideInInspector] public Transform currentRespawnPoint;
+   
 
     void Start()
     {
@@ -101,30 +100,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // NUEVO: Método para hacer respawn
-    public void Respawn()
-    {
-        if (currentRespawnPoint != null)
-        {
-            characterController.enabled = false;
-            transform.position = currentRespawnPoint.position;
-            characterController.enabled = true;
-            Debug.Log("Has muerto y has respawneado.");
-        }
-        else
-        {
-            Debug.LogWarning("No hay respawn asignado.");
-        }
-    }
-
-    // NUEVO: Detección de colisión con "Destruir"
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Destruir"))
-        {
-            Respawn();
-        }
-    }
+   
 
     private void OnDrawGizmos()
     {
