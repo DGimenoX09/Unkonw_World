@@ -57,7 +57,7 @@ public class CambioCarril : MonoBehaviour
         isMoving = true; // Bloquea el cambio hasta que termine de moverse
 
         // Cambia entre las dos posiciones especificas
-        currentLane = (currentLane == -0.006881595f) ? -4f : -0.006881595f;
+        currentLane = (currentLane == -0.006881595f) ? 8f : -0.006881595f;
 
         // Actualiza la posicion de destino segun el carril seleccionado
         targetPosition.x = currentLane;

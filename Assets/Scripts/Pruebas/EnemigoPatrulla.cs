@@ -70,6 +70,9 @@ public class EnemigoPatrulla : MonoBehaviour
                 tiempoSinContacto = 0f; 
                 Debug.Log("Atacando al jugador dentro del rango.");
                 _animator.SetTrigger("IsAttacking"); 
+                
+                  // Aqui llamamos a la funcion que hace dano
+                HacerDanioAlJugador();
             }
             else
             {
@@ -130,6 +133,19 @@ public class EnemigoPatrulla : MonoBehaviour
             Debug.Log("Atacando al jugador (colisión detectada).");
         }
     }
+
+    private void HacerDanioAlJugador()
+    {
+    if (jugador != null)
+    {
+        PlayerHealth playerHealth = jugador.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(1); // Le quitamos 1 punto de vida
+        }
+    }
+    }
+
 
     // Dibuja un área de ataque en la escena para visualizar el rango en X, Y y Z
     private void OnDrawGizmosSelected()
