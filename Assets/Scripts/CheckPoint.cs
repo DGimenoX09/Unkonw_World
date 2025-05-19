@@ -21,7 +21,7 @@ public class CheckPoint : MonoBehaviour
         {
             // Si toca un checkpoint, actualizamos el punto de respawn
             respawnPoint = other.transform.position;
-            
+
             // Activamos el efecto visual cuando el jugador toca un checkpoint
             if (visualEffect != null)
             {
@@ -31,15 +31,19 @@ public class CheckPoint : MonoBehaviour
         else if (other.CompareTag("Destruir"))
         {
             // Si toca la zona de muerte, reaparece en el último checkpoint
+            RespawnPlayer();
+        }
+    }
 
-            // Desactiva el CharacterController para evitar conflictos
-            CharacterController cc = player.GetComponent<CharacterController>();
-            if (cc != null)
-            {
-                cc.enabled = false; // Desactivamos el CharacterController para mover al jugador
-                player.transform.position = respawnPoint + Vector3.up * 0.5f; // Respawn ligeramente arriba
-                cc.enabled = true; // Reactivamos el CharacterController
-            }
+    // Nueva función para que otros scripts puedan forzar el respawn del jugador
+    public void RespawnPlayer()
+    {
+        CharacterController cc = player.GetComponent<CharacterController>();
+        if (cc != null)
+        {
+            cc.enabled = false; // Desactivamos el CharacterController para mover al jugador
+            player.transform.position = respawnPoint + Vector3.up * 0.5f; // Respawn ligeramente arriba
+            cc.enabled = true; // Reactivamos el CharacterController
         }
     }
 }
