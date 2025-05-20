@@ -38,7 +38,7 @@ public class CambioCarril : MonoBehaviour
         }
 
         // Solo permite el cambio de carril si no esta en movimiento, la habilidad esta activada y no ha cambiado en el aire
-        if (Input.GetKeyDown(KeyCode.C) && !isMoving && (canChangeLane || (wasInZone && !hasChangedInAir)))
+        if (Input.GetButtonDown("CambioCarril") && !isMoving && (canChangeLane || (wasInZone && !hasChangedInAir)))
         {
             ChangeLane();
             if (!controller.isGrounded) hasChangedInAir = true; // Marca que ya cambio en el aire

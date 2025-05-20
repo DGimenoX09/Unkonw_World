@@ -4,6 +4,8 @@ public class AlternarMundo : MonoBehaviour
 {
     public GameObject empty1; // Asigna el primer empty en el inspector
     public GameObject empty2; // Asigna el segundo empty en el inspector
+    float ltThreshold = 0.01f;
+    bool ltPressedLastFrame = false;
 
     private bool isEmpty1Active = true; // Estado inicial, el primer empty esta activo
 
@@ -16,11 +18,13 @@ public class AlternarMundo : MonoBehaviour
 
     void Update()
     {
+        bool ltPressedNow = Input.GetAxis("LT") > ltThreshold;
         // Verifica si se presiona la tecla "J"
-        if (Input.GetKeyDown(KeyCode.J))
+        if ((Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("ChangeWorld") || (ltPressedNow && !ltPressedLastFrame)))//Input.GetButtonDown("ChangeWorld")
         {
             ToggleEmpties();
         }
+        ltPressedLastFrame = ltPressedNow;
     }
 
     void ToggleEmpties()
@@ -31,4 +35,4 @@ public class AlternarMundo : MonoBehaviour
         empty1.SetActive(isEmpty1Active); //mundo normal
         empty2.SetActive(!isEmpty1Active); //mundo Unkown World
     }
-}
+} 
