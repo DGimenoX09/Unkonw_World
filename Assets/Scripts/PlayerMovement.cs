@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float changeTime;
     public float changeTimer = 0.5f;
 
+
     private Animator _animator;
 
     private CharacterController characterController;
@@ -100,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   
 
     private void OnDrawGizmos()
     {
