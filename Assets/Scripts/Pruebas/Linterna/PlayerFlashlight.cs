@@ -18,7 +18,10 @@ public class PlayerFlashlight : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             RaycastHit hit;
-            _animator.SetBool("IsFlashing", true);
+            // _animator.SetBool("IsFlashing", true);
+            _animator.SetTrigger("IsFlashing");
+            _linterna.SetActive() //TODO
+
             Vector3 direction = transform.forward; // El rayo apunta en la dirección Z (hacia adelante y hacia atrás del jugador)
             
             if (Physics.Raycast(rayOrigin.position, direction, out hit, stunRange, enemyLayer))

@@ -48,10 +48,12 @@ public class EnemigoPatrulla : MonoBehaviour
     {
         if (aturdido)
         {
+            _animator.SetBool("IsCegado",true);
             tiempoAturdido -= Time.deltaTime;
             if (tiempoAturdido <= 0f)
             {
                 aturdido = false;
+                _animator.SetBool("IsCegado",false);
                 Debug.Log("Enemigo ya no está aturdido");
             }
             return; // Salir del Update si está aturdido
