@@ -5,9 +5,10 @@ public class PlayerFlashlight : MonoBehaviour
     public float stunRange = 5f;
     public LayerMask enemyLayer;
     public Transform rayOrigin;
+    
 
     private Animator _animator; 
-
+    [SerializeField] GameObject _linterna;
     void Awake()
     {
         _animator = GetComponent<Animator>(); 
@@ -20,7 +21,7 @@ public class PlayerFlashlight : MonoBehaviour
             RaycastHit hit;
             // _animator.SetBool("IsFlashing", true);
             _animator.SetTrigger("IsFlashing");
-            _linterna.SetActive() //TODO
+            _linterna.SetActive(true); //TODO //Quiero una corrutina donde espere 0.7 segundos y desactive el objeto de la linterna.
 
             Vector3 direction = transform.forward; // El rayo apunta en la dirección Z (hacia adelante y hacia atrás del jugador)
             
@@ -34,7 +35,10 @@ public class PlayerFlashlight : MonoBehaviour
             }
         }
     }
-
+    public void DesactivarLinerna(){ //si no funciona borrar lo nuevo
+        Debug.Log("holaaa");
+        _linterna.SetActive(false);
+    }
     private void OnDrawGizmosSelected()
     {
         if (rayOrigin == null) 
