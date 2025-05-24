@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CorrerSonido : MonoBehaviour
@@ -10,23 +8,19 @@ public class CorrerSonido : MonoBehaviour
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.2f;
 
-    private CharacterController controller;
-
-    void Start()
-    {
-        controller = GetComponent<CharacterController>();
-    }
-
     void Update()
     {
-        bool isMoving = Mathf.Abs(controller.velocity.x) > speedThreshold;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        bool isMoving = Mathf.Abs(horizontal) > speedThreshold;
         bool isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
 
         if (isMoving && isGrounded)
         {
             if (!footstepsAudio.isPlaying)
+            {
                 footstepsAudio.Play();
                 Debug.Log("Reproduciendo sonido");
+            }
         }
         else
         {

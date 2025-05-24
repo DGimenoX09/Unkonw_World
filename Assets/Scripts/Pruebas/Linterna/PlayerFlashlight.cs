@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerFlashlight : MonoBehaviour
@@ -5,54 +6,64 @@ public class PlayerFlashlight : MonoBehaviour
     public float stunRange = 5f;
     public LayerMask enemyLayer;
     public Transform rayOrigin;
-    
 
-    private Animator _animator; 
-    [SerializeField] GameObject _linterna;
+    [SerializeField] private GameObject _linterna;
+
+    private Animator _animator;
+    private CharacterController _characterController;
+
     void Awake()
     {
-        _animator = GetComponent<Animator>(); 
+        _animator = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        // Solo permite usar la linterna si el personaje está en el suelo
+        if (Input.GetButtonDown("Flash") && _characterController.isGrounded)
         {
-            RaycastHit hit;
-            // _animator.SetBool("IsFlashing", true);
-            _animator.SetTrigger("IsFlashing");
-            _linterna.SetActive(true); //TODO //Quiero una corrutina donde espere 0.7 segundos y desactive el objeto de la linterna.
+            ActivarLinterna();
+        }
+    }
 
-            Vector3 direction = transform.forward; // El rayo apunta en la dirección Z (hacia adelante y hacia atrás del jugador)
-            
-            if (Physics.Raycast(rayOrigin.position, direction, out hit, stunRange, enemyLayer))
+    private void ActivarLinterna()
+    {
+        RaycastHit hit;
+
+        _animator.SetTrigger("IsFlashing");
+
+        _linterna.SetActive(true);
+        StartCoroutine(DesactivarLinternaConRetraso(0.7f));
+
+        Vector3 direction = transform.forward;
+
+        if (Physics.Raycast(rayOrigin.position, direction, out hit, stunRange, enemyLayer))
+        {
+            EnemigoPatrulla enemy = hit.collider.GetComponent<EnemigoPatrulla>();
+            if (enemy != null)
             {
-                EnemigoPatrulla enemy = hit.collider.GetComponent<EnemigoPatrulla>();
-                if (enemy != null)
-                {
-                    enemy.Stun(3f); // Aturdir por 3 segundos
-                }
+                enemy.Stun(3f); // Aturdir por 3 segundos
             }
         }
     }
-    public void DesactivarLinerna(){ //si no funciona borrar lo nuevo
-        Debug.Log("holaaa");
+
+    IEnumerator DesactivarLinternaConRetraso(float tiempo)
+    {
+        yield return new WaitForSeconds(tiempo);
         _linterna.SetActive(false);
     }
+
     private void OnDrawGizmosSelected()
     {
-        if (rayOrigin == null) 
-            rayOrigin = transform; // Aseguramos que el rayo salga desde el objeto si no se asignó uno específico.
+        if (rayOrigin == null)
+            rayOrigin = transform;
 
-        Gizmos.color = Color.yellow; // Establecemos el color del Gizmo
+        Gizmos.color = Color.yellow;
 
-        // Dirección del rayo (en el eje Z)
-        Vector3 direction = transform.forward; // El rayo apunta en la dirección Z
+        Vector3 direction = transform.forward;
 
-        // Dibujamos una línea que representa la dirección del rayo de la linterna
         Gizmos.DrawLine(rayOrigin.position, rayOrigin.position + direction * stunRange);
-
-        // Si deseas agregar más detalles, puedes dibujar una esfera en el extremo del rayo
         Gizmos.DrawSphere(rayOrigin.position + direction * stunRange, 0.2f);
     }
 }
