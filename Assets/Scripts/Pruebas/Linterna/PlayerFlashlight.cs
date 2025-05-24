@@ -9,7 +9,8 @@ public class PlayerFlashlight : MonoBehaviour
     public float verticalOffset = 0f;
 
     [SerializeField] private GameObject _linterna;
-    [SerializeField] private AudioSource flashSound; // <-- NUEVO
+    [SerializeField] private AudioSource flashSound;
+    [SerializeField] private ParticleSystem flashParticles; // <-- NUEVO
 
     private Animator _animator;
     private CharacterController _characterController;
@@ -38,7 +39,10 @@ public class PlayerFlashlight : MonoBehaviour
         StartCoroutine(DesactivarLinternaConRetraso(0.7f));
 
         if (flashSound != null)
-            flashSound.Play(); // <-- SONIDO
+            flashSound.Play();
+
+        if (flashParticles != null)
+            flashParticles.Play(); // <-- NUEVO: reproducir sistema de partículas
 
         Vector3 originPosition = rayOrigin.position + new Vector3(0f, verticalOffset, 0f);
         Vector3 direction = transform.forward;
