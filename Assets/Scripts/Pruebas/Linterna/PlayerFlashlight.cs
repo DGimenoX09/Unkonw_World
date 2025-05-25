@@ -42,7 +42,7 @@ public class PlayerFlashlight : MonoBehaviour
             flashSound.Play();
 
         if (flashParticles != null)
-            flashParticles.Play(); // <-- NUEVO: reproducir sistema de partículas
+            flashParticles.Play(); // <-- NUEVO: reproducir sistema de particulas
 
         Vector3 originPosition = rayOrigin.position + new Vector3(0f, verticalOffset, 0f);
         Vector3 direction = transform.forward;

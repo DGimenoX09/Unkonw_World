@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class AlternarMundo : MonoBehaviour
 {
-    public GameObject empty1; // Asigna el primer empty en el inspector
-    public GameObject empty2; // Asigna el segundo empty en el inspector
+    public GameObject empty1; // Mundo normal
+    public GameObject empty2; // Unknown World
+
+    [Header("Sonidos de cambio de mundo")]
+    public AudioSource sonidoMundoNormal;
+    public AudioSource sonidoMundoAlterno;
+
     float ltThreshold = 0.01f;
     bool ltPressedLastFrame = false;
 
-    private bool isEmpty1Active = true; // Estado inicial, el primer empty esta activo
+    private bool isEmpty1Active = true;
 
     void Start()
     {
-        // Asegurate de que el primer empty este activo y el segundo este desactivado al inicio
         empty1.SetActive(true);
         empty2.SetActive(false);
     }
@@ -19,20 +23,31 @@ public class AlternarMundo : MonoBehaviour
     void Update()
     {
         bool ltPressedNow = Input.GetAxis("LT") > ltThreshold;
-        // Verifica si se presiona la tecla "J"
-        if ((Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("ChangeWorld") || (ltPressedNow && !ltPressedLastFrame)))//Input.GetButtonDown("ChangeWorld")
+
+        if (Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("ChangeWorld") || (ltPressedNow && !ltPressedLastFrame))
         {
             ToggleEmpties();
         }
+
         ltPressedLastFrame = ltPressedNow;
     }
 
     void ToggleEmpties()
     {
-        // Alterna entre los dos mundos
         isEmpty1Active = !isEmpty1Active;
 
-        empty1.SetActive(isEmpty1Active); //mundo normal
-        empty2.SetActive(!isEmpty1Active); //mundo Unkown World
+        empty1.SetActive(isEmpty1Active);
+        empty2.SetActive(!isEmpty1Active);
+
+        if (isEmpty1Active)
+        {
+            if (sonidoMundoNormal != null)
+                sonidoMundoNormal.Play();
+        }
+        else
+        {
+            if (sonidoMundoAlterno != null)
+                sonidoMundoAlterno.Play();
+        }
     }
-} 
+}
