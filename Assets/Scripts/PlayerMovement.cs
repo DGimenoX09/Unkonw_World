@@ -14,20 +14,22 @@ public class PlayerMovement : MonoBehaviour
     public float changeTime;
     public float changeTimer = 0.5f;
 
-
     private Animator _animator;
-
     private CharacterController characterController;
     [SerializeField] private Vector3 velocity;
     private bool isGrounded;
+    private bool wasGrounded; // 
 
     public float ReducirVelocidad = 2.5f;
 
-   
+    [Header("Audio")]
+    [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource landSound; // 
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        wasGrounded = true;
     }
 
     void Awake()
@@ -53,7 +55,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Gravity()
     {
+        wasGrounded = isGrounded;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && !wasGrounded)
+        {
+            // Aterrizó
+            if (landSound != null)
+                landSound.Play();
+        }
 
         if (isGrounded && velocity.y < 0)
         {
@@ -73,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             _animator.SetBool("IsJumping", true);
+
+            if (jumpSound != null)
+                jumpSound.Play();
         }
     }
 
@@ -84,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move((move * currentMoveSpeed + velocity) * Time.deltaTime);
 
-        // Rotación del personaje
         if (horizontalInput < 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -100,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool("IsRunning", false);
         }
     }
-
 
     private void OnDrawGizmos()
     {
