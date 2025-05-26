@@ -12,6 +12,8 @@ public class CambioCarril : MonoBehaviour
     private bool wasInZone = false; // Permite cambiar de carril en el aire si estuvo en la zona
     private bool hasChangedInAir = false; // Evita multiples cambios en el aire
 
+    public bool isAlive = true; // Nuevo flag para saber si el personaje esta vivo
+
     void Start()
     {
         // Inicializamos la posicion de destino con el carril inicial
@@ -21,9 +23,11 @@ public class CambioCarril : MonoBehaviour
 
     void Update()
     {
+        if (!isAlive) return; // Evita ejecutar el resto del código si está muerto
+
         // Detecta si el personaje esta sobre una plataforma valida
         CheckLaneZone();
-        
+
         // Movimiento suave hacia el nuevo carril
         Vector3 moveDirection = new Vector3(targetPosition.x - transform.position.x, 0, 0);
         if (moveDirection.magnitude > 0.05f) // Si aun no ha llegado al destino
@@ -34,7 +38,7 @@ public class CambioCarril : MonoBehaviour
         {
             // Cuando llega al destino, desbloqueamos el cambio de carril
             isMoving = false;
-            transform.position = new Vector3(targetPosition.x, transform.position.y, transform.position.z); // Asegurar la posicion exacta
+            transform.position = new Vector3(currentLane, transform.position.y, transform.position.z); // Asegurar la posicion exacta
         }
 
         // Solo permite el cambio de carril si no esta en movimiento, la habilidad esta activada y no ha cambiado en el aire
@@ -77,5 +81,10 @@ public class CambioCarril : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void OnDisable()
+    {
+        isMoving = false;
     }
 }
