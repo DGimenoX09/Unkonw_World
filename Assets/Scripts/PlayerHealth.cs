@@ -7,7 +7,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        // Busca el objeto que tiene el script CheckPoint
         checkpointSystem = FindObjectOfType<CheckPoint>();
     }
 
@@ -25,6 +24,20 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("¡Jugador muerto!");
+
+        if (DeathManager.Instance != null)
+        {
+            DeathManager.Instance.AddDeath();
+
+            if (DeathManager.Instance.deathCount >= 10)
+            {
+                // Llegó a 10 muertes, se lanza el Game Over
+                // No hacemos respawn aquí para evitar conflicto
+                return;
+            }
+        }
+
+        // Si no se llegó a 10 muertes, respawneamos normalmente
         if (checkpointSystem != null)
         {
             checkpointSystem.RespawnPlayer();

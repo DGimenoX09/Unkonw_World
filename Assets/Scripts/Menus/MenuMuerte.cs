@@ -1,17 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class MenuMuerte : MonoBehaviour
 {
     public void RetryButton()
     {
-        SceneManager.LoadScene("Unkonw_World"); 
+        if (DeathManager.Instance != null)
+            DeathManager.Instance.ResetDeaths();
+
+        SceneManager.LoadScene("Unkonw_World"); // Asegúrate que el nombre esté bien escrito
     }
 
     public void MainMenuButton()
     {
-        SceneManager.LoadScene("MenuInicial"); 
+        if (DeathManager.Instance != null)
+            DeathManager.Instance.ResetDeaths();
+
+        SceneManager.LoadScene("MenuInicial");
     }
 }

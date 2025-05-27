@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerDestroyer : MonoBehaviour
 {
-    public Transform respawnPoint; // Se actualizara al pisar un nuevo checkpoint
+    public Transform respawnPoint; // Se actualiza al pisar un nuevo checkpoint
 
     private void OnTriggerEnter(Collider other)
     {
@@ -10,6 +10,11 @@ public class PlayerDestroyer : MonoBehaviour
         {
             Debug.Log("Has muerto");
 
+            // Contar la muerte
+            if (DeathManager.Instance != null)
+                DeathManager.Instance.AddDeath();
+
+            // Respawnear al jugador
             CharacterController controller = GetComponent<CharacterController>();
             if (controller != null)
             {
