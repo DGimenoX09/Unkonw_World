@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX; // Necesario para trabajar con efectos visuales
@@ -27,6 +27,7 @@ public class CheckPoint : MonoBehaviour
             {
                 visualEffect.Play(); // Reproducimos el efecto visual
             }
+            
         }
         else if (other.CompareTag("Destruir"))
         {
@@ -51,13 +52,13 @@ public class CheckPoint : MonoBehaviour
             player.transform.position = respawnPoint + Vector3.up * 0.5f; // Respawn ligeramente arriba
             cc.enabled = true; // Reactivamos el CharacterController
         }
-
-        // Resetear carril y volver a activar
         CambioCarril cambioCarril = player.GetComponent<CambioCarril>();
         if (cambioCarril != null)
         {
             cambioCarril.ResetToMainLane(); // Mover al carril principal y reiniciar target
-            cambioCarril.isAlive = true;    // Reactivar el control
+            cambioCarril.isAlive = true;
         }
+
+        // Resetear carril y volver a activar
     }
 }

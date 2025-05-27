@@ -6,7 +6,7 @@ public class GameMenuController : MonoBehaviour
 {
     public GameObject menuUI; 
     private bool isGamePaused = false;
-
+    
     void Update()
     {
         // Abre o cierra el menu al presionar Escape

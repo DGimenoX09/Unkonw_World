@@ -55,6 +55,7 @@ public class CambioCarril : MonoBehaviour
         isMoving = true;
         currentLane = (currentLane == -0.006881595f) ? 8f : -0.006881595f;
         targetPosition.x = currentLane;
+        // Debug.Log("CAMBIANDO DE CARRIL");
     }
 
     void CheckLaneZone()
@@ -76,7 +77,7 @@ public class CambioCarril : MonoBehaviour
     {
         currentLane = -0.006881595f;
         isMoving = false;
-
+        Debug.Log("RESETEANDO RESETEANDO");
         // Mover al carril principal directamente
         Vector3 newPosition = transform.position;
         newPosition.x = currentLane;
