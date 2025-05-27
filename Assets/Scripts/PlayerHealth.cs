@@ -31,17 +31,15 @@ public class PlayerHealth : MonoBehaviour
 
             if (DeathManager.Instance.deathCount >= 10)
             {
-                // Llegó a 10 muertes, se lanza el Game Over
-                // No hacemos respawn aquí para evitar conflicto
+                // No hacemos respawn para que cargue Game Over
                 return;
             }
         }
 
-        // Si no se llegó a 10 muertes, respawneamos normalmente
         if (checkpointSystem != null)
         {
             checkpointSystem.RespawnPlayer();
-            health = 1; // Reinicia la vida
+            health = 1;
         }
     }
 }

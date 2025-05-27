@@ -13,7 +13,7 @@ public class DeathManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            deathCount = 0; // Reiniciar contador al empezar
+            deathCount = 0;
         }
         else
         {
@@ -26,6 +26,12 @@ public class DeathManager : MonoBehaviour
         deathCount++;
         Debug.Log("Muerte número: " + deathCount);
 
+        HeartOverlay heartOverlay = FindObjectOfType<HeartOverlay>();
+        if (heartOverlay != null)
+        {
+            heartOverlay.UpdateHeartOpacity(deathCount);
+        }
+
         if (deathCount >= 10)
         {
             deathCount = 0;
@@ -36,5 +42,11 @@ public class DeathManager : MonoBehaviour
     public void ResetDeaths()
     {
         deathCount = 0;
+
+        HeartOverlay heartOverlay = FindObjectOfType<HeartOverlay>();
+        if (heartOverlay != null)
+        {
+            heartOverlay.UpdateHeartOpacity(0);
+        }
     }
 }

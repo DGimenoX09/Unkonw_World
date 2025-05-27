@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Escenas/MenuDeMuerte.unity
     guid: eeadc34b3e7b5dd4b91f489a669253d8
+  - enabled: 1
+    path: Assets/Escenas/FinalVideoScene.unity
+    guid: b89850ab410718b4b95a4329f86d5c4b
   m_configObjects: {}
