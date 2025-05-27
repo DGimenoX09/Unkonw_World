@@ -3,52 +3,46 @@ using UnityEngine;
 public class CambioCarril : MonoBehaviour
 {
     public CharacterController controller;
-    public float laneDistance = 2f; // La distancia entre los carriles
-    public float transitionSpeed = 15f; // La velocidad de transicion
-    private float currentLane = -0.006881595f; // Carril inicial
+    public float laneDistance = 2f;
+    public float transitionSpeed = 15f;
+    private float currentLane = -0.006881595f;
     private Vector3 targetPosition;
-    private bool isMoving = false; // Controla si el personaje esta cambiando de carril
-    private bool canChangeLane = false; // Habilidad activada solo en ciertas plataformas
-    private bool wasInZone = false; // Permite cambiar de carril en el aire si estuvo en la zona
-    private bool hasChangedInAir = false; // Evita multiples cambios en el aire
+    private bool isMoving = false;
+    private bool canChangeLane = false;
+    private bool wasInZone = false;
+    private bool hasChangedInAir = false;
 
-    public bool isAlive = true; // Nuevo flag para saber si el personaje esta vivo
+    public bool isAlive = true; // Control de estado de vida
 
     void Start()
     {
-        // Inicializamos la posicion de destino con el carril inicial
         targetPosition = transform.position;
         targetPosition.x = currentLane;
     }
 
     void Update()
     {
-        if (!isAlive) return; // Evita ejecutar el resto del código si está muerto
+        if (!isAlive) return;
 
-        // Detecta si el personaje esta sobre una plataforma valida
         CheckLaneZone();
 
-        // Movimiento suave hacia el nuevo carril
         Vector3 moveDirection = new Vector3(targetPosition.x - transform.position.x, 0, 0);
-        if (moveDirection.magnitude > 0.05f) // Si aun no ha llegado al destino
+        if (moveDirection.magnitude > 0.05f)
         {
             controller.Move(moveDirection.normalized * transitionSpeed * Time.deltaTime);
         }
         else if (isMoving)
         {
-            // Cuando llega al destino, desbloqueamos el cambio de carril
             isMoving = false;
-            transform.position = new Vector3(currentLane, transform.position.y, transform.position.z); // Asegurar la posicion exacta
+            transform.position = new Vector3(currentLane, transform.position.y, transform.position.z);
         }
 
-        // Solo permite el cambio de carril si no esta en movimiento, la habilidad esta activada y no ha cambiado en el aire
         if (Input.GetButtonDown("CambioCarril") && !isMoving && (canChangeLane || (wasInZone && !hasChangedInAir)))
         {
             ChangeLane();
-            if (!controller.isGrounded) hasChangedInAir = true; // Marca que ya cambio en el aire
+            if (!controller.isGrounded) hasChangedInAir = true;
         }
 
-        // Si el personaje toca el suelo, resetea las variables
         if (controller.isGrounded)
         {
             wasInZone = false;
@@ -58,18 +52,13 @@ public class CambioCarril : MonoBehaviour
 
     void ChangeLane()
     {
-        isMoving = true; // Bloquea el cambio hasta que termine de moverse
-
-        // Cambia entre las dos posiciones especificas
+        isMoving = true;
         currentLane = (currentLane == -0.006881595f) ? 8f : -0.006881595f;
-
-        // Actualiza la posicion de destino segun el carril seleccionado
         targetPosition.x = currentLane;
     }
 
     void CheckLaneZone()
     {
-        // Lanza un pequeno chequeo debajo del personaje para detectar si esta sobre una zona valida
         Collider[] hitColliders = Physics.OverlapSphere(transform.position + Vector3.down * 0.5f, 0.2f, Physics.AllLayers, QueryTriggerInteraction.Collide);
         canChangeLane = false;
         foreach (Collider col in hitColliders)
@@ -77,14 +66,23 @@ public class CambioCarril : MonoBehaviour
             if (col.CompareTag("CambioCarrilZone"))
             {
                 canChangeLane = true;
-                wasInZone = true; // Si el personaje entra en la zona, recuerda que puede cambiar de carril en el aire
+                wasInZone = true;
                 break;
             }
         }
     }
 
-    void OnDisable()
+    public void ResetToMainLane()
     {
+        currentLane = -0.006881595f;
         isMoving = false;
+
+        // Mover al carril principal directamente
+        Vector3 newPosition = transform.position;
+        newPosition.x = currentLane;
+        transform.position = newPosition;
+
+        // Recalcular target para evitar movimiento no deseado
+        targetPosition = transform.position;
     }
 }
