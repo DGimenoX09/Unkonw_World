@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         wasGrounded = true;
+        // QualitySettings.vSyncCo  unt = 1;
     }
 
     void Awake()

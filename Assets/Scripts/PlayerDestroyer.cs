@@ -20,6 +20,7 @@ public class PlayerDestroyer : MonoBehaviour
             else
             {
                 transform.position = respawnPoint.position;
+                Debug.Log("In Respawn");
             }
         }
     }
