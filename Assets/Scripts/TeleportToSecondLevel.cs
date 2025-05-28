@@ -2,28 +2,46 @@ using UnityEngine;
 
 public class TeleportToSecondLevel : MonoBehaviour
 {
-    public Transform level2StartPoint; // Asigna aquí el punto de inicio del nivel 2
-    public GameObject player; // Asigna el jugador en el inspector
+    public Transform level2StartPoint;  // Punto inicio nivel 2 (tecla U)
+    public Transform level3StartPoint;  // Punto inicio nivel 3 (tecla I)
+    public Transform partefinal;   // Otro punto personalizado (tecla O)
+    public GameObject player;           // El jugador
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            if (player != null && level2StartPoint != null)
-            {
-                CharacterController controller = player.GetComponent<CharacterController>();
+            TeleportTo(level2StartPoint, "nivel 2");
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            TeleportTo(level3StartPoint, "nivel 3");
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            TeleportTo(partefinal, "otro punto");
+        }
+    }
 
-                // Desactiva el CharacterController temporalmente para evitar errores de teletransporte
-                if (controller != null)
-                    controller.enabled = false;
+    void TeleportTo(Transform destination, string name)
+    {
+        if (player != null && destination != null)
+        {
+            CharacterController controller = player.GetComponent<CharacterController>();
 
-                player.transform.position = level2StartPoint.position;
+            if (controller != null)
+                controller.enabled = false;
 
-                if (controller != null)
-                    controller.enabled = true;
+            player.transform.position = destination.position;
 
-                Debug.Log("Teletransportado al inicio del nivel 2");
-            }
+            if (controller != null)
+                controller.enabled = true;
+
+            Debug.Log("Teletransportado al " + name);
+        }
+        else
+        {
+            Debug.LogWarning("Falta asignar el jugador o el punto de inicio de " + name);
         }
     }
 }
