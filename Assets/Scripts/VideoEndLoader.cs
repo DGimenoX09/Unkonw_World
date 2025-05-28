@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class VideoEndLoader : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    public string nextSceneName = "Unkonw_World"; // Pon aquí el nombre de tu escena del juego
+    public string nextSceneName = "Unkonw_World"; // Pon aquí el nombre real de tu escena del juego
+
+    private bool hasSkipped = false;
 
     void Start()
     {
@@ -19,7 +21,26 @@ public class VideoEndLoader : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // Si se pulsa M y aún no hemos saltado
+        if (Input.GetKeyDown(KeyCode.M) && !hasSkipped)
+        {
+            hasSkipped = true;
+            LoadNextScene();
+        }
+    }
+
     void OnVideoFinished(VideoPlayer vp)
+    {
+        if (!hasSkipped)
+        {
+            hasSkipped = true;
+            LoadNextScene();
+        }
+    }
+
+    void LoadNextScene()
     {
         SceneManager.LoadScene(nextSceneName);
     }
