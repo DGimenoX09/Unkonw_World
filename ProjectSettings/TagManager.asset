@@ -9,6 +9,7 @@ TagManager:
   - CambioCarrilZone
   - enemyLayer
   - CheckPoint
+  - VidasTexto
   layers:
   - Default
   - TransparentFX
